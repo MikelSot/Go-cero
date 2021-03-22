@@ -1,0 +1,969 @@
+HISTORIA
+    creado en google en 2007 por Robert Griesemer, Rob Pike
+    primer a version en noviembre de 2009
+
+    surge a traves de la NECESIDAD de combinar la seguridad y rendimiento de los
+    leguajes COMPILADOS ESTATICOS  (c, c++, c#, JAVA)  con la expresividad y conveniencia de
+    los lenguajes INTERPRETADOS TIPO DINAMICOS (javascrip, python)
+
+    TIENE el Cross-compiling
+        puedo compilar desde el SO que este para otro SO diferente al que estoy.
+
+    - es Estaticamente tipado [ String name ]
+    - pero tiene caracteristicas que lo hacen tambien de tipo dinamico [ let numero ]
+        (en este caso el compilar es el que se encarga dinamicamente el tipo de dato)
+
+    FUE PENSADO para hacer SOFTWARE de ALTO NIVEL
+        1era CAPA -> el lenguaje de prgramacion en si
+
+        2da CAPA -> es todo un conjunto de herramientas (el cual GO nos provee cuando lo instalamos)  [hace que no intalemos lista de TERCEROS]
+
+        3era CAPA -> es todo un ecosistema
+
+GO PLAYGROUND
+    https://play.golang.org/
+
+    en este pagina podemos escribir codigo de GO
+
+    ESTRUCTURA DE TODO ARCHIVO GO
+        package -> el nombre del paquete al que pertenece el archivo (debe ir en las primeras lineas) (osea la carpteta al que pertenece COMO en JAVA, C#)
+        main    -> es el paquete principal (puede estar conformado por uno o varios archivos, debemos tener una UNICA funcion MAIN)
+        import  -> nos permite urilizar el codigo de otros paquetes
+
+COMPILAR ARCHIVOS GO (se escribe desde la terminal)
+    go run nameArchive.go
+
+GENERAR UN CODIGO BINARIO ( esto usualmente se hace cuando ya esta todo listo)
+     go build nameArchive.go
+
+    nameArchive.exe [con eso lo ejecutamos]
+
+
+VARIABLES OPERADORES Y TIPOS DE DATOS
+    VARIABLES
+        - un espacio en memoria que almacena un valor.
+
+        OJO en GO todas la variables que declaremos  se deben de utilizar si ese no es el caso NOS arojara un ERROR
+        RECUERDA que go es de tipo estatico como java los tipos de datos en una variable PERDURAN y no se cambia asi nomas el tipo de dato {a menos que que lo conviartas}
+
+            package main        // main es el paquete principal y es el que permiter ejecutar mi aplacacion
+
+            # FMT (format) es un paquete
+            import "fmt"
+
+            func main() {
+            	#DECLARACION Y ASIGNACION EN DIFERENTES LIENAS
+            	# var nameVariable typeData
+
+            	var nameVariable string
+            	nameVariable ="miguel"
+
+            	# DECLARACION Y ASIGNACION EN LA MISMA LINEA
+            	var nameVariableLinea string = "valor"
+            	fmt.Println(nameVariable + nameVariableLinea) //esta concatenacion UNE los valores
+
+            	# DECLARAR MAS DE UNA VARIABLE EN UNA LINEA
+            	var dog, cat string = "valor dog", "valor cat"
+            	fmt.Println(dog, cat) // esta concatenacion imprimer los valores
+
+            	# DECLARAR VARIABLE SIN ESPECIFICAR EL TIPO DE DATO
+            	var myDog, mycat = "mi dog", 12
+            	fmt.Println(myDog, mycat)
+
+            	# DECLARAR VARIABLES SIN USAR LA PALABRA "VAR" y usar el SHORTHAN
+            	# O OPERADOR DE VARIABLE CORTA ":="
+            	# OJO eso solo funciona si declaras la variable y a la ves le das un VALOR todo en una misma linea
+            	mineDog, mineCat := "mi perro", "mi gato"
+
+            	# mineCat:= "gatito"   ESTO NO funciona ya que los ":=" solo funciona para declarar variables(NUEVAS) y asignarle valor, no SIRVE para estar cambiando de valor a una vairble
+            	mineCat, face := "gato valor nuevo", "mi cara"  // si se puede cambiar de valor a una variable con ":=" si y solo si hay en esa linea VARIBLES NUEVAS
+
+            	mineCat = "gatito"  // este si funciona para estar asignarle otro valor (recuerda del mismo tipo) a una variable
+            	fmt.Println(mineDog, mineCat)
+            	fmt.Println(face)
+            }
+
+    CONSTANTES
+        - utilizan las misma sintaxis que las variables con la diferencia de que no usan la palabra "VAR"
+            sino "CONST"
+
+        - RECUERDA que el valor que se asigna NO puede cambiar
+        - OJO NO PUEDE USAR el operador de VRIABLE CORTA ":=" ya que si hacemos esto ya no seria una CONSTANTE sino una variable
+
+            const pi = 3.141516
+
+    COMENTARIOS
+        1: UN SOLA LINEA
+            //
+
+            REGLAS
+                - para todo lo demas comentario de una linea  (documentar, explicacion, ETC)
+        2: MULTILINEA
+            /*
+            */
+
+            REGLAS
+                - se usa para comentar codigo que NO VAMOS  a UTILIZAR
+
+        COMANDOS PARA VISUALIZAR UNA DOCUMENTACION
+             go doc --all           (nos genera una serie de parrafos en que nos espeficica cada cosa que hemos comentado y bloque de constantes y variables ETC)
+
+        GENERANDO DOCUMENTACION EN LINEA
+            godoc.org/[ruta de mi proyecto en github o etc]         // que ya tenga pues comentarios en los codigos
+
+    TIPOS DE DATOS
+        VERBOS FMT
+            https://golang.org/pkg/fmt/
+        1: Tipos de datos basicos en GO
+            - bool       -> true, false
+            - string     -> cadenas de texto
+            - numeric    -> numericos
+
+        - BOOL
+	        var nameVariable bool = true
+	        # fmt.Printf()		-> sirve para imprimir cosas con formato osea anidar texto c variables
+	        fmt.Printf("Tipo: %T , valor: %v",nameVariable, nameVariable)  // nameVariable aparece 2 veces ya que el primero es para optener su TIPO y el segundo para optener su valor
+
+	        # %T  (es un verbo el cual le estamos DICIENDO que nos diga que tipo de dato es)
+	        # %V  (con este le decimos que nos diga que valor tiene)
+
+        - STRING
+	        var nameVariable string = "valor de name"
+	        fmt.Printf("Tipo: %T , valor: %v",nameVariable, nameVariable)  // nameVariable aparece 2 veces ya que el primero es para optener su TIPO y el segundo para optener su valor
+
+        - NUMERICOS
+            TIPOS
+                UINT
+                    -numeros sin signos son solo positivos
+                    [unit8 de 8 bit, uint16, ...., uint64]
+
+                INT
+                    - tienen signo pueden ser negativos o positivos
+                    [int8, ..., int64]
+
+                byte
+                    - es un alias para UINT8 (osea puedes declarar variables con "byte" o "uint8")
+
+                rune
+                    - es un alias para INT32, lo mismo ocurre con esto
+                    - representa un COCIDGO UNICODE, es la representacion numerica de un caracter
+
+                    var nameVariable rune = 'a'   // 'a' -> 97
+                        // cuando estamos con comillas simples deben ser solo un caracter dentro
+
+                float32, float64
+                    - nos permiten almacenar numeros decimales
+
+              OJO recuerda que GO es fuertemente TIPADO esto quiere decir que no vamos a poder hacer operaciones con diferentes tipos de datos
+                    var nameVariable float32 = 12.324
+                    a:= 12
+                    b:= a+nameVariable
+
+            CASTING
+                - nos permite CAMBIAR el tipo de dato de una variable para realizar UNA OPERACION
+
+                var nameVariable float32 = 12.324
+                a:= 12
+                b:= a+ int(nameVariable) // RECUERDA que esto no modifica el TIPO de dato original
+                fmt.Println(b)
+
+            IDENTIFICADOR BLANCO
+                - es cuando tenemos variables que la hemos declarado pero aun no la hemos usado
+
+                _= 13213  // no se ponen los ":" y se le agrega un guion  bajo "_" tambien noo se pone el nombre
+                var _ string ="132"
+
+            EL VALOR CERO
+                - go le asigna un valor a todas las variables cuando se declaran consu tipo de dato [ALGO asi como en JAVA y sus tipos de atos primitovos y su valor por defecto]
+
+                   var nameVariable string      // nameVariable tenda como valor por defecto "" las comillas o vacio
+	                    var nameVariable string
+	                    fmt.Printf("Tipo: %q", nameVariable)
+
+                   var nameVariable int         // (uint,...)  dan "0" como valor por defecto
+	                    var nameVariable uint
+	                    fmt.Printf("Tipo: %v", nameVariable)
+
+                   var nameVariable bool        // "false" como valor por defecto
+	                    var nameVariable bool
+	                    fmt.Printf("Tipo: %v", nameVariable)
+
+    OPERACIONES ARITMETICAS Y DE ASIGNACION
+        (), *, /, %, +, -             (como en todos los lenguajes, los parentesis para agrupar operaciones, la gerarquia de operaciones en el orden que esta ahi)
+	        var a = 4+2*3
+	        fmt.Println(a)
+
+        OPERACIONES DE ASIGNACION
+            =
+            +=, -=, *=, /=, %=      [ var b = b + N => b += N]
+
+	        var a = 4+2*3
+	        var b = 12
+	        b = b + 2
+	        a+= 2
+	        fmt.Println(a, b)
+
+        - Declaracion POST-INCREMENTO Y POST- DECREMENTO  osea=> x ++, y --
+             (no son una expresion sino una declaracion del lenguaje)  [y no existe ++x, --y]
+
+            EXPRESION   -> es una parte de codigo que me produce un valor.        [a = 2+8*4]
+            DECLARACION -> es una instruccion del lenguaje que realiza una accion  [var a]
+
+	          var c = 3
+	          c++
+	          c--
+
+            fmt.Println()  // es una expresion y este solo nos tiene que mostrar resultados
+
+    OPERADORES DE COMPARACION Y LOGICOS
+        COMPARACION
+            <, > , <=, >=, ==, != (diferente)
+        LOGICOS
+            && , ||
+
+        UNARIO
+            !   (negacion, [niega el resultado])
+
+PUNTEROS
+    - son variables que almacenan la direccion en memoria de unn VALOR
+	fruit:= "manzana"
+
+	# con "&fruit" le estamos diciendo que queremos la direccion en memoria
+	fmt.Printf("Tipo: %T, Valor: %s, Direccion: %v", fruit, fruit, &fruit)
+
+	# PUNTERO
+	var puntero *string	//[con el "*" le decimos que ->  la variable "puntero" almacenara la direccion en memeoria de un tipo de dato string
+
+	# ASIGNANDO VALOR A UN PUNTERO
+	puntero = &fruit		// le asignamos como valor la posicion de memeoria de FRUITS
+
+	*puntero = "nueva mansana"  // estamos modificando el VALOR de FRUIT (con, la operacion de desreferenciacion )
+		// ya que RECUERDA el puntero si ese operador solo tiene la posicion el memoria.
+
+	fmt.Printf("\nTipo: %T, Valor: %v, DESREFERENCIACION: %s", puntero, puntero, *puntero)
+	# *puntero -> con esto estamos opteneindo el valor (que esta almacenado en la direccion de memeoria) [es un operador de desreferenciacion]
+
+ARRAY
+    - OJO una ves asignado el tamaño de los ARRAYS este ya no puede crecer mas (a menos de que usemos slices)
+
+	var nameArray [tamaño] typeData
+
+    nameNewArray := [tamaño] typeData {values,...}
+
+    # DECLARACION DE UN ARRAY
+	var nameArray [3] string
+
+	nameArray[0] = "primera posicion"
+	nameArray[1] = "segunda posicion"
+	nameArray[2] = "tercera posicion"
+
+	fmt.Println(nameArray)
+
+	# ARRAY LITERALES
+
+	nameNewArray:= [3] string {"comer", "beber", "party"}
+	fmt.Println(nameNewArray)
+
+SLICES
+    - nos permiten trabajar con los ARRAYS  de forma dinamica  (cmabiar el tamaño  de un array)
+    - OJO si modificamos algo en el SLICE estoy modificando en el ARRAY directamente (si cambio un valor en el array tambien camabiara)
+    - los SLICES tienen TAMAÑO y CAPACIDAD
+
+    QUE SON ?
+        son apuntadores a ARRAYS y al ser apuntadores estos no almacenan ningun  dato
+        OSEA el SLICE no poseen datos, son apuntadores a un Array.
+
+
+	numbers := [7] string {"1", "2", "3", "4", "5", "6", "7"}
+
+	# SLICE (le indicamos a que ARRAY apuntar, tambien de que posicion de donde va empezar y en que posicion finalizar)
+
+	  nameSlice := nameArray[inicioInDICE:finalINDICE]
+
+	    animals := numbers[0:6]		// en este caso me traera .hasta la posicion 5 osea sera hasta la posicion 6-1
+
+	    fly := numbers[0:7]  //en este caso estoy traendo ahora si todas las posiciones ya que son 6 (osea 7-1)
+	    	# fly := numebers[3:]  -> si no especifico el final este esperzara desde la pocision inicial que le indiquemos hasta EL FINAL
+	    	# fly := numebers[:3] -> si no especificamos el inicio este traera todo desde la primera pocicion hasta el final que le indiquemos
+	    	# fly := numebers[:]  -> me traera todo el array sino espeficio el inicio ni el final
+
+	    fly[0] = "👽"  // RECUERDA si modifico en alg oen el SLICE tambien lo hago en el ARRAY original
+	    fmt.Println(animals, fly[0],"✈",  numbers)
+
+        EXAMPLE RECO READ
+        	numbers := [7] string {"1", "2", "3", "4", "5", "6", "7"}
+
+        	animals := numbers[1:3] // 2,3
+        	// TAMAÑO es el numero de elementos que contiene el SLICE
+        	fmt.Println("SIZE ✈", len(animals))
+
+        	# CAPACIDAD es el numero de elementos del ARRAY de donde empiezo a extraer hasta el FINAL del array (obviando su final de extrancion).
+        	// en este caso NUMBERS tiene 7 posiciones(0,1..), pero el SLICE empieza a obtener desde 1 hasta 3era posicion,
+        	// ENTONCES para saber su pasacidad este OBVIA el final de la extraccion(obtencion) de elementos y se pasa hata el final OSEA la capacidad deL SLICE "animals"
+        	// va desde 1 hasta el final del array "number" osea 6 POSICIONES [1,2,...7] = 6 posiciones
+        	fmt.Println("CAPACIDAD ✈", cap(animals))
+
+
+        	# AGREGAR ELELEMNTOS A UN ARRAY  (mediante los SLICES y suando el metodo "
+        	([nameSlice] , value, value2,..)")
+        	animals = append(animals, "1", "2", "3", "5", "6", )
+
+        	#COMPOTAMIENTO AL AGREGAR ELELEMNTOS  (desde el slice usando append)
+        	//1: cuando la TAMAÑO del ARRAY es superior al del SLICE que extraimos, OSEA cuando extraemos partes especificas y [1:4] y el array es de 8 elementos
+        		//  cuando agreguemos valores por APPEND este se agregara al ultimo elemento posicion del SLICE o ultimo HIJO PERO con la caracteristica de que IRA CAMABIANDO LOS valores del ARRAY original
+        		//  EXAMPLE:: array = {1,2,3,4, 5}, slice[1,3], (osea 2,4), agregamos -> slice =append(slice,"value"); el array original se cambion -> [1,2,3, value,5]; el SLICE -> [1,2,3,value]
+        	//2: cuando agregamos hasta llegar a la  ultima posicion de array original este ARRAY ORIGINAL vuvlve asu estado NORMAL sin (las mofificaciones que las hallan surgido (en la anterior ))
+        		// y el SLICE CRECE
+        		// EXMAPLE: (continuacion del ejemplo anterior), agregamos-> slice = append(slice."value-1", "value-2", "value-3"), el array(ahora que el slice tiene igual posiciones que el array original) este ultimo vuleve asu estado o valor original
+        		// ARRAY->[1,2,3,4,5], el SLICE -> [2,4,value-1, value-2, value-3] {recuerda que es solo ejemplo los avalores agregados}, incluso el SLICE ahora puede crecer mmucho mas sin AFECTAR al ARRAY original
+
+        	// AUMENTO DE LA CAPACIDAD (slice) [tambien aumento de tamaño (slice)]
+        		// cuando llega a su capacidad MAXIMA (de donde expece a extraer hasta el final del array) este crea un NUEVO ARRAYR duplicando su CAPACIDAD anterior
+        		// y toma los elemento s que ya tiene el SLICE y toma los elemmentos que le estoy pasando con la funcion append y los INCLUYE en el NUEVO ARRAY
+        		// y lo que hace despues es RETORNAR un nuevo SLICE APUNTANDO al NUEVO ARRAY CREADO (el que tienen el doble de capacidad), PERDIENDO asi le referencia al array original (es por eso que al igualar o exceder la caacidad al agregar los elementos este array original toma su valor original)
+
+
+        	fmt.Println("SLICE",animals)
+        	fmt.Println("ARRAY", numbers)
+
+        	fmt.Println("CAPACIDAD ✈", cap(animals))
+        	fmt.Println("SIZE ✈", len(animals))
+
+            #(SLICE LITERALES) ALICES DESDE CERO REFERENCIANDO A UN ARRAY NUEVO (osea un array vacio , que espeficico un tamaños[pero que tenga un tipo de dato])
+        	fruits:= []string{"1", "23"} // como no hay un array al que estan referenciando, lo que se hace es que cuando se crea un SLICE (lo primero que hace es construio un ARRAY y pasarle eso valores, y luego crear un slice referemciado a ese array que el creo)
+
+        	#CREANDO SLICE con la funcion PRE contruida MAKE  --> nameSlice := make([]string, size, capacity)
+        	fruits := make([]string, 0, 3)
+        	fruits = append(fruits, "2", "3", "4", "5")
+        	fmt.Println(fruits)
+        	fmt.Println(cap(fruits))
+
+        	# VALOR CERO DE LOS SLICES (cuando NO especificamos su size, capacity, NO lo referenciamos a un array o no le damos valores ) este EMPIEZA CON (un SIZE de 0 y una CAPACITY 0)  nil NIL ( que es null o nulo en otros lenguajes)
+        	var fruits[]string
+
+MAPS
+    son estructuras de CLAVE VALOR , (como los diccionaros en java, python, o array asociatrivos en php o objetos en javascript)
+
+    # CREAR MAPAS -> nameMap := make(map[stypeDataCLAVE]typeDataVALUE)
+	animals := make(map[string]string)
+
+	# ASIGNAR VALORES -> nameMap["clave"] = value
+	animals["cat"]= "🐈"
+	animals["dog"] = "🐕"
+
+	fmt.Println(animals)
+
+	# MAPAS LITERAL
+	fruits:= map[string]string{
+		"manzana": "🍏",
+		"banana" : "🍌",
+		"zanahoria":"🤪", // OJO en GO al ultimo elemento si tiene que llevar la "," coma
+	}
+
+
+	# ELIMINAR UN ELEMENTO DE UN MAPA -> delete(nameMap, "[clave]")
+	delete(fruits, "zanahoria")
+	fmt.Println(fruits)
+
+	# OBTENER EL VALOR DE UN ELEMENTO
+	fmt.Println(fruits["banana"])
+
+	// CONSULTAR VALORES QUE NO ESTEEN EN EL MAPA (recuerda GO nos retorna multiples valores)
+	// valores que nos pueden retornar si hacemos esa consulta -> resultado, ok[si es que existe o no]
+
+	resultado, ok := fruits["sandia"] // el 1ero tendra como valor (el valor de esa llave si esque existe), el 2do tendra un valor booleano y este VALIDA SI ES QUE EXISTE o no esa "lave"  o consulta
+
+	# si la llave no exite que lo cree
+	if _, ok := fruits["sandia"]; !ok{  //usamos el identificador blando (ya que es una variable que no usamos pero queremos que este ahi)
+		animals["sandia"] = "🍉"
+	}
+	fmt.Println(animals)
+
+ESTRUCTURAS
+    - nos permiten almacenar una COLECCION de campos.  (son como las clases en java o en otro lenguaje)
+
+	    # CREACION DE UNA ESTRUCTURA  -> type nameEstructur structur{ nameAtributo typeData}
+	    type course struct {
+	    	Name string
+	    	Teacher string
+	    	Country string
+	    }
+
+	    # CREAR INSTANCIAS DE ESA ESTRUCTURA -> nameIntancia := nameEstructur{ nameAtributo:[value]}
+	    db := course{
+	    	Name: "Bases de datos",
+	    	Teacher: "Miguel",
+	    	Country: "Peru",
+	    }
+
+	    fmt.Printf("%+v\n", db)
+
+	    # INATANCIAS LITERALES (los valores tienen que ir en el mismo orden) [OJO eso solo funciona cuando quiero una instancia con otodos los atributos]
+	    nameInstancia := course{"Git", "Mikel", "Peru"}
+	    fmt.Printf("%+v\n", nameInstancia)
+
+	    nameNewIntancia := course{Teacher: "mikel p"} // solo optenemos el PROFESOR
+	    fmt.Printf("%+v\n", nameNewIntancia)
+
+	    # ACCEDER A UN CAMPO (o atributo)
+	    fmt.Printf("%+v\n", nameInstancia.Teacher) // accedemos al profesor
+
+	    # CREAR PUNTEROS A ESTRUCTURAS
+	    puntero := &nameNewIntancia
+	    (*puntero).Teacher = "Alejandro" //[desreferenciamos] como estamos utilizando CAMPOS debemos usar PARENTESIS
+	    puntero.Name = "de Soto"	// GO nos ayuda mucho es por eso que para las estructuras no tenemos que hacer la desreferenciacion (poder *) y tampoco los parentesis
+	    fmt.Printf("%+v\n", puntero)
+
+CONTROL DE FLUJO
+    IF
+        - OJO no son necesarios los prentesis en la condicion
+
+	        if condicion {
+
+	        } else if condicion {
+
+	        }else {
+
+	        }
+
+        EXAMPLE
+
+	        emoji := "🍉"
+	        if emoji == "📅" {
+	        	fmt.Println("es un calendario")
+	        } else if emoji=="😘" {
+	        	fmt.Println("es una cara")
+	        }else {
+	        	fmt.Println("no es un emoji")
+	        }
+
+	        # DECLARACION DE UNA VARIABLE EN IF (esta variable tiene un SCOPE solo dentro del IF [o de los IF anidados] )
+	        // if nameVariable; condicion{
+	        //
+	        // } else if condicion {
+	        //
+	        // }else{
+	        //
+	        // }
+
+	        if emoji:= "😋"; emoji == "😱"{
+	        	fmt.Println("noes una cara igual")
+	        }else if emoji=="😋"{
+	        	fmt.Println("es una cara igual") // este se ejecuta o se muestra
+	        }else{
+	        	fmt.Println("ninguna de las anteriores")
+	        }
+
+	        fmt.Println(emoji)  // esto nos DA error ya que la variable EMOJI no existe
+
+    SWITCH
+        - no necesita los parentesis en la expresionm, NO USA la palabra reservada BREAK
+
+            switch expr {
+            		case condicion:
+
+            		case condicion:
+
+            		default :
+            }
+        EXAMPLE
+	        emoji:= "🐕"
+	        switch emoji {
+	        	case "🍌":
+	        		fmt.Println("es un platano")
+	        	case "🍎":
+	        		fmt.Println("es una manzana")
+	        	default :
+	        		fmt.Println("es una animal")
+	        }
+
+            # CASOS COMUNES  (ose puede ser uno o lo otro)
+                emoji:= "🐕"
+                switch emoji {
+                	case "🍌", "🍉":  // puede ser l 1ero o el 2do
+                		fmt.Println("es un platano o un sandia")
+                	case emoji == "🍎" || emoji == "🐕":
+                		fmt.Println("es una manzana")
+                	default :
+                		fmt.Println("es una animal")
+                }
+    FOR CLASICO
+        - es la unica funcion para trabajar con ciclos
+        - NO necesita parentesis
+
+	       for i:= 0; i< 10; i++ {
+	       	fmt.Println(i)
+	       }
+
+    FOR CONTINUO
+        - es similar al WHILE  (recorre el bucle mientra se cumpla la condicion)
+
+	        i:= 0
+	        for i<= 0 {
+	        	fmt.Println(i)
+	        	i++
+	        }
+
+    FOR FOREVER
+        - es un for que dura para SIENPRE (un bucle infinito)
+	        i:= 0
+	        for {
+	        	fmt.Println(i)
+	        	i++
+	        }
+
+    FOR RANGE
+        - me permite iterar sobre slices, mapas y string
+        FOR RANGE SLICE
+            - este bucle nos devuelve dos valores el INDICE(del slice[recuerda que este apunta aun array]) y el VALOR  (del de esa pocicion)
+            - OJO el FOR RANGE te devuleve una COPIA del VALOR (del elemento o del apocicon) es como un MAP de javascript
+
+            numbers := []uint8{1,2,3,4,5,6,7,8}
+	        for indice, valor := range numbers{
+	        	fmt.Println("Indice::", indice, "valor::", valor)
+
+	        	numbers[indice]*=3  // con esto si se cambia como tal el valor de un elemento (del slice)
+	        	valor*=3 // esto no funciona RECUERDA en RANGE nos devuelve una copia del valor original espor eso que no surtira efecto en el SLICE ORiginal
+	        }
+
+        FOR RANGE MAPS
+	        sports := map[string]string{"basketball":"🏀", "soccer":"⚽"}
+
+	        for key, value := range sports{
+	        	fmt.Println(key, value)
+	        }
+
+        FOR RANGE STRING
+	        hellos:= "hello"
+
+	        for indice, valor :=range hellos{
+	        	fmt.Println(indice, string(valor))  // hacemos un casting ya que sin ESTO el me imprime cuandos BITS ocupa ese valor
+	        }
+
+FUNCIONES
+        fun nameFunction(parameter1, ...){ }
+       EXAMPLE
+        func main() {
+        	hello()
+        }
+
+        func hello()  {
+
+	CON PARAMETROS POR VALOR Y POR REFERENCIA
+        # se debe indicar el tipo de dato del parametro como en JAVA o C#
+            func main(){
+            	hello("value 1er", "value 2do")
+            }
+
+            func hello(nameParameter string, lastName string){
+            	fmt.Printf("Hello %s %s", nameParameter, lastName)
+            }
+
+        FUNCIONES PASO PARAMETROS POR VALOR
+            # OJO una funcion cuando la llamamos y le pasamos los parametros esta funcion no recibe
+                como tal el valor de ese parametro SINO recibe UNA COPIA de ese PARAMETRO
+                es por eso que cuando tu le reasignas el valor de ese parametro dentro de la funcion, el parametro original sigue con su valor original y no cambia (por mas que en la funcion la hallamos cambiado)
+
+                func main(){
+                	emoji:="i"
+                	change(emoji)
+                	fmt.Println(emoji)  // esto nos da "i" ya que por mas que ejecutemos la funcion el valor no cambia del parametro original
+                }
+
+                func change(value string){
+                	value ="me"
+                }
+
+
+        FUNCIONES POR REFERENCIA
+            # es cuando esta funcion si modifica el valor del parametro original (no como la anterior funcion)
+
+            PARA ESO se usan los PUNTEROS
+
+                func main(){
+                	//hello("value 1er", "value 2do")
+                	emoji:="i"
+                	change(&emoji) // le pasamos la direccion en memoria
+                	fmt.Println(emoji)
+                }
+
+
+                func change(value *string){ // con el * le estamos diciendo que vamos a optener la direccion en memeoria del parametro
+                	*value ="me"  // ahora desreferenciamos para poder modificar ese valor
+                }
+
+        FUNCIONES QUE RETORNEN VALORES (return)
+
+            func main(){
+            	value:=sum(2,7)
+            	fmt.Println(value)
+            }
+
+            func sum(num1 int, num2 int) int{
+            	return num1+num2
+            }
+            #OTRA FORMA
+            func sum(num1, num2 int) int{
+            	# cuando nos parametros consecutivos tienen el mismo tipo de dato puedo
+            	# obiarse el tipo de dato del primero y solo poner el del segundo (ya que este hara referencia a los dos)
+            	return num1+num2
+            }
+
+        RETORNO DE MULTIPLES VALORES
+            - entre parentesis le decimos que tipos de datos [nos puede] que va retornar a retornar   [(puede que nos traiga uno de los tipos de datos que lo especifiquemos) ]
+
+            func nameFunction(nameParameter typeData) (string, string){
+                return nameReurn,...
+            }
+
+            EXAMPLE
+                func main(){
+                	texto := "COmer"
+                	min, max := convert(texto) // estamos opteniendo los dos valores que nos va a retornar
+                	fmt.Println(min, max)
+
+                }
+
+                func convert(text string) (string, string){
+                	min := strings.ToLower(text)
+                	max := strings.ToUpper(text)
+                	// retonarmos esos valores
+                	return min, max
+                }
+
+        CONTROLADOR DE ERRORES
+            - desde que se creo el lenguaje, se penso en controlar y manejar los errores en el momento en que se presentan.
+                a diferencia de otros lenguajes en donde se manejan EXCEPCIONES  que muchas veces no son controladas.
+
+            + IMPORTAMOS el paquete -->  io/util    [funcion] -->
+                este funcion nos permite leer el contenido de un archivo y atraves del usua de esta funcion vamos a ver como es que se controlan los ERRORES
+
+            ioutil.ReadFile(" [rutaArchive] ")
+                 Esta funcion nos devuelve dos valores:
+                    1ero --> es el contenido del archivo que esta leyendo
+                    2do  --> es un error que haya ocurrido
+
+            EXAMPLE  (todo esto esta en la funcion main)
+
+	            // almacenamos los valores
+	            content, err := ioutil.ReadFile("./GO.txt")
+
+	            if err!= nil {
+	            	// estamos diciendo que si el error es diferente de su valor 0 (osea que este no es igual a su valor por defecto)
+	            	fmt.Printf("Ocurrio un error: %v", err)
+	            	return  // si se cumple la condicion (si hay error), que retorne osea que se corte y no ejecute mas codigo que esta debajo
+	            }
+	            fmt.Println(string(content))
+
+            EXAMPLE CONTRUIR UN ERROR
+
+                func main(){
+                	result, err := divicion(10,0)
+                	if err != nil {
+                		fmt.Printf("ERROR --> %v", err)
+                	}
+                	fmt.Println(result)
+                }
+
+                func divicion(dividendo, divisor int) (int, error){
+                	if divisor == 0 {
+                		return 0, errors.New("NO puedes dividir por ")
+                	}
+                	return dividendo/divisor, nil
+                }
+
+        PARAMETROS NOMBRADOS
+            - no es mas que ponderle un nombre a tipos de datos que va a retornar una funcion
+
+            EXAMPLE  (del ejemplo anterior de como construir un error)
+
+                // parametros nombrados
+                func divicion(dividendo, divisor int) (result int, err  error){
+
+                	if divisor == 0 {
+                		err = errors.New("NO puedes dividir por ")
+                		/*
+                		* AL hacer el NOMBRAMIENTO de los tipos de datos (parametros nombrados)
+                		* estos NOMBRES o ALIAS toman sus valores por defecto de cada tipo de dato
+                		*	en caso de int es --> 0 y en el caso de error es -0-> nil
+                		*
+                		* Al cumplirse esta condicional sobreescribimos ese valor es por eso que se nos mostrara este error y RESULT (nombre alias) es 0 y tambien nos mostrara
+                		*/
+                		return
+                	}
+                	result = dividendo/divisor
+                	return
+                }
+
+        FUNCIONES QUE RECIBEN Y RETORNAN FUNCIONES
+            - las funciones son tambien tipos de datos entonces tambien se pueden pasar funciones como parametros o hacer que retornen funciones
+                - algo asi como el paradigma funcional
+
+            EXAMPLE FUNCIONES QUE RECIBEN UNA FUNCION
+                + en sintaxis podriamos decir que son muy parecidos a los MAP, FOREACH, FILTER de JAVASCRIPT
+
+                func main(){
+                	nums:= []int {1,2,3,23, 465, 7, 7899,90}
+                	result := filter(nums, func(number int) bool {
+                		if number >= 10{
+                			return true
+                		}
+                		return false
+                	})
+                	fmt.Println("RESULTADO --> ", result)
+                }
+
+                // esta funcion FILTER recibe dos parametros un SLICE de enteros  y una FUNCION que retornara un boleano y esta funcion FILTER va a retornar un SLICE de ENTEROS
+
+                func filter(nums []int, callback func(int) bool) []int {
+                	result := []int{}
+
+                	for _, value :=range nums{
+                		if callback(value) {
+                			result = append(result, value)
+                		}
+                	}
+                	return result
+                }
+
+            EXAMPLE FUNCIONES QUE RETORNAR FUNCIONES
+                1:
+                    func main()  {
+                    	/* como la funcion HELLO devuelve una funcion esta funcion que retorna se le asigna a la variable VALUE
+                    	* entonces esta vairable se convierte en una funcion [ANONIMA en JS por algo] que para ejecutarla debemos llamarla como una funcion o sino
+                    	* simplemente ponerle un parentesis mas a la funcion HELLO
+                    	*/
+
+                    	value := hello("Mikel")()  --> 1: le pondemos dos parentesis
+                    	fmt.Println( value() )     --> 2: le llamamos a esa variable como funcion
+                    }
+
+                    func hello(name string) func() string {
+                    	// aqui estamos retornando la funcion que devolvera un tipo de dato STRING
+                    	return func() string {
+                    		return "Hello " + name
+                    	}
+                    }
+
+                2:
+                    func main()  {
+                    	value := hello("Mikel")("RENOJO")  // --> 1ra forma
+                        value("soto")     // -->  2da forma
+                    }
+
+
+                    func hello(name string) func(string) string {
+                    	// la funcion que retorna recibe un parametro STRING
+                    	return func(text string) string {
+                    		return "Hello " + name +" " + text
+                    	}
+                    }
+
+        FUNCIONES VARIATICAS
+            - son funciones que esperan N cantidad de parametosdel mismo TIPO
+
+            func main(){
+            	fmt.Println(sum(1,2,3,4,5,6))
+            }
+
+            // definimos funciones variaticas, con esos 3 puntos al lado del tipo de variable
+            func sum(nums ...int) int {
+            	total := 0
+            	// recorremos para optener los [valores] PARAMETROS que le pasaron a esta funcion
+            	for _, values := range nums{
+            		total+=values
+            	}
+            	return total
+            }
+
+        FUNCIONES ANONIMAS
+            - son funciones que no tienen nombre
+            + son similares a las funciones anonimas de JAVASCRIPT
+
+            func main(){
+            	anonima := func() {
+            		fmt.Println("Hello")
+            	}
+            	anonima()
+
+            	// FUNCIONES ANONIMAS AUTOEJECUTADAS
+            	func(text string){
+            		fmt.Println("Se AUTOEJECUTA", text)
+            	}("THIS TEXT")
+            }
+
+DEFER
+    - nos permite diferer(aplazar algo) algo
+        y que queremos APLAZAR la ejecucion de una funcion y HASTA que momento queremos aplazar su ejecucion
+        hasta finalize o retorne la funcion en donde fue especificada el DEFER
+
+    + usualmente se usa para limpiar recursos, para serrar archivos, conexion de red o para cerrar controladores de la base de datos
+
+    EXAMPLE
+        func main(){
+        	 - en este EJEMPLO el print que tiene el DEFER se ejecutara de ultimo ya que este
+        	  se pondra en pausa su ejecucion hasta que finalize la funcion (ejecucion) MAIN luego de eso recien se imprime
+
+        	defer fmt.Println(3)
+        	fmt.Println(1)
+        	fmt.Println(2)
+        }
+
+    ORDEN DE EJECUCION DE LOS DEFER'S
+        func main(){
+        	/*
+        	* cuando tenemos mas de un DEFER en una funcion esta a medida que va recorriendo la funcion se agrega los DEFER
+        	* a un a PILA (ulrimos en entrar primeros en salir [UEPS])
+        	*
+        	*  ENTONCES al encontrar al primero DEFER Println(3) , lo agrega a la PILA (seria el primer elemento de la pila)
+        	*  luego encuentra al segundo Println(2) y lo agrega a la pila y seria el 2do elemento de la pila que esta ria por encima de Println(3)
+        	*  y asi hasta llegar a println(1) que seria el ultimo elemento que se agrega a la pila y al no AVER mas DEFER'S y al aver acavado de ejecutar la funcion MAIN
+        	*  este EMPIEZA  a ejecutar los DEFER'S de la pila en orden del ultimo en entrar hasta ejecutar al primer DEFER que entro a la pila (que seria el ultimo)
+        	*/
+
+        	defer fmt.Println(3)
+        	defer fmt.Println(2)
+        	defer fmt.Println(1)
+        }
+
+    ARGUMENTOS DE UN DEFER
+        func main(){
+        	a:= 5
+        	defer fmt.Println("DEFER ->", a)
+        	/*
+        	*	AQUI estamos reasignado la variable "a" y nos imprime lo siguiente
+        	*		SIN DEFER -> 10
+        	*		DEFER-> 5
+        	*
+        	*	SUCEDE ESTO porque el DEFER aplaza la ejecucion de esa linea de codigo pero no de la variable o argumento
+        	*    es por esto que este no se entera del cambio del argumento ya que simplemente a aplazado la ejecucion de esa linea de codigo con los valore que tenian esos argumentos
+        	*/
+        	a=10
+        	fmt.Println("SIN DEFER- >", a)
+        }
+
+    LIMPIAR RECURSOS CON DEFER (example real)
+        func main(){
+        	/* crearemos ur archivo y utilizaremos el DEFER para cerrar el archivo */
+
+        	// esta funcion nos permite crear un archivo, nos devuelve el archivo creado y el error y es que OCRURRE
+        	file, err := os.Create("nameArchive.txt")
+
+        	if err != nil{
+        		fmt.Printf("Ocurrio un error al crear el archivo  --> %v", err)
+        		return
+        	}
+
+        	/*LA IDEA de usar el DEFER es usarla despues de aver creado el archivo (ya que como este hace aplaza su ejecucion hasta
+        	* el final de la ejecucion de la funcion o que retorne y es ahi recien cuando se ejecutara)
+        	* y eso ES UTIL para que cuando nos olvidamos de serralo y no ocurra un algo malo
+            * ademas de que si ocurre un error y los condicionales lo captan estos condicionales haran que retorne la funcion y haran que se ejecute el DEFER asi que es un muy bien uso
+        	*/
+        	defer file.Close()
+
+        	// escribimos en el archivo si es que no ocurre un error (en este caso sobreescribirmos la variable error es por eso que no ponemos ":=", ya que estamos sobreescribiendo un valor)
+        	_, err = file.Write([]byte("Hellor world"))
+
+        	if err != nil{
+        		//file.Close() --> cerramos archivo (si es que ocurre algun error) esto solo se usa si es que no USAMO el DEFER ya que si existe el error este if se ejecura y retornara la funcion HACIENDO que se ejecute el defer
+        		fmt.Printf("Ocurrio un error al escribir en el archivo  --> %v", err)
+        		return
+        	}
+        	file.Close() // cerramos el archivo su todo sale bien
+        }
+
+PANIC
+    - nos permite entrar en panico esto quiere decir que nos permite finalizar la EJECUCION del programa (funcion)
+        cuando la funcion panic es llamada
+
+    func main(){
+    	division(10,3)
+    	division(30,2)
+    	division(2,0) // esta funcion nunca se ejecuta y kas que le siguen debajo tampoco ya que para su ejecucion (PANIC recuerda)
+    	division(10,4)
+    }
+
+    func division(nume1, nume2 int){
+    	validar(nume2)
+    	fmt.Println(nume1/nume2)
+    }
+
+    func  validar(nume1 int)  {
+    	if nume1 == 0 {
+    		panic("PARAR EJECUCION NUMERO 0 NO VALIDO")
+    	}
+    }
+
+RECOVER
+    - nos podemos podemos recuperar de la ejecucion de un PNIC
+        osea con esta funcion vamos a poder ejecutar las funciones o lineas de codigo que estan por debajo de la linea que genero el PANIC
+
+    + OJO para poder usar esta funcion debemos usar junto son la declaracion DEFER
+
+        func main(){
+        	division(10,3)
+        	division(30,2)
+        	division(2,0)
+        	division(10,4)
+        }
+
+        func division(nume1, nume2 int){
+        	defer func(){
+        		/* nos veluelve un valor y este el el contenido del PANIC (y al hacerle NIL y es diferente de su contenido
+        		*  por defecto (esto quiere decir que si se ejecuto el panic y el value ya tiene valor y es el vaor de paniic))
+        		*
+        		*  OJO recuerda que esta funcion anonima que esta definida por el DEFER se ejecuta cuando la funcion retone (en este caso se termine de ejecutar)
+        		*   O cuando se ejecute el PANIC [en este caso validamos tambien, entonces se ejecuta cuando ingresa  a la CONDICIONAL]
+        		*/
+
+
+        		if value := recover(); value!= nil{
+        			// aqui vamos a ejecutar el codigo SI y solo SI se se ejecuto el PANIC
+        			fmt.Println("RECUPERANDOME DEL PANIC --> ", value)
+        		}
+        	}()
+        	validar(nume2)
+        	fmt.Println(nume1/nume2)
+        }
+
+        func  validar(nume1 int)  {
+        	if nume1 == 0 {
+        		panic("PARAR EJECUCION NUMERO 0 NO VALIDO")
+        	}
+        }
+
+PAQUETES Y MODULOS
+        MAIN
+            - es el paquete ejecutable
+    PAQUETES
+        CONCEPTO
+            -  es simplemente una carpete que tiene una coleccion de archivos
+                que nos provén de una funcionalidad.
+
+        - cada archivo que creemos dentro de un paquete (que  hayamos creado)
+            debe tener en la primera liena del codigo el NOMBRE DEL PAQUQTE al cual pertenece ese archivo
+
+        - DATO
+            cualquier variable que este fuera de las funciones AUTOMATICAMENTE este sera una variable global
+            para todo ese archivo y para todo EL PAQUETE .
+
+            + esta variable GLOBAL debe declararse unsado la paralbra reservada VAR
+                var nameVariable = [value]
+
+        +  IDENTIFICADORES EXPORTABLES()
+            esto quere decir que cuando importe este archivo o paquete, SOLO se importe, las variables , funciones ,..etc
+            que cumplan una condicion y los que no cumplan esa condicion NO SEAN ACCEDIDOS desde otros paquetes o archivos.
+
+            + la CODICION ES :
+                -- si la primera letra del una funcion [o variable] empiza con MAYUSCULA entonces esta pordra ser accedida o compartidad con otros PAQUETE [o archivos]
+
+                -- si la primera letra de una funcion o variable empieza con "minuscula" entonces esta NO podra ser accedida, compartida o exportada a otros PAQUETE [o archivo]
+
+        - IMPORTAR PAQUETES (o identificadoes)
+            OJO como en GO siempre se toma el nombre del paquete para referenciar a la funcion, es por eso que siempre el nombre del paquete debe ser muy ESPECIFICO
+                tambien debes tener en cuenta en NO incurrir en tener REDUNDANCIA con el nombre del paquete y las funciones (ya que recuerda los paquetes hacen referencia a la funcion)
+            sintaxis:
+                namePaquete.nameFunction()
+
+
+
